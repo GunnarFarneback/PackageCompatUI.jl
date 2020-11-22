@@ -1,0 +1,19 @@
+name = "CompatUI"
+uuid = "65465c31-362d-417a-a2f0-7fa38ae507b9"
+authors = ["Gunnar Farnebäck <gunnar.farneback@contextvision.se>"]
+version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+GitCommand = "49b5b516-ca3f-4003-a081-42bdcf55082d"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+REPL = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
+Scratch = "6c6a2e73-6563-6170-7368-637461726353"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+GitCommand = "1.1"
+JSON3 = "1"
+Scratch = "1"
