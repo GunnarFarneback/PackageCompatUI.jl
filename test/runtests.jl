@@ -1,5 +1,5 @@
 using Test
-using CompatUI: compute_compat, get_julia_versions
+using PackageCompatUI: compute_compat, get_julia_versions
 
 @testset "compute_compat" begin
     versions = ["0.0.1", "0.0.2", "0.1.0", "0.1.1", "0.2.0",

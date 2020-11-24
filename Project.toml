@@ -1,4 +1,4 @@
-name = "CompatUI"
+name = "PackageCompatUI"
 uuid = "65465c31-362d-417a-a2f0-7fa38ae507b9"
 authors = ["Gunnar Farnebäck <gunnar.farneback@contextvision.se>"]
 version = "0.1.0"

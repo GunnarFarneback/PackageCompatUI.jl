@@ -1,24 +1,22 @@
-# CompatUI
+# PackageCompatUI
 
-CompatUI is a terminal text interface to the `[compat]` section of a
-Julia `Project.toml` file.
+PackageCompatUI is a terminal text interface to the `[compat]` section
+of a Julia `Project.toml` file.
 
 ## Installation
 
 ```julia
 using Pkg
-pkg"add https://github.com/GunnarFarneback/CompatUI.jl.git"
+pkg"add https://github.com/GunnarFarneback/PackageCompatUI.jl.git"
 ```
 
-*Note*: add `CompatUI` to your default environment, not to the project
-you want to set compat for.
+*Note*: add PackageCompatUI to your default environment, not to the
+project you want to set compat for.
 
 ## Compatibility
 
-CompatUI requires a Julia master version of 2020-11-15 or later (after
-the merge of https://github.com/JuliaLang/julia/pull/38393). For full
-functionality the not yet merged (as of 2021-11-21) PR
-https://github.com/JuliaLang/julia/pull/38489 is also needed.
+PackageCompatUI requires a Julia master version of 2020-11-23 or later
+(after the merge of https://github.com/JuliaLang/julia/pull/38489).
 
 ## Usage
 
@@ -26,7 +24,7 @@ Start Julia with `--project` or use `Pkg.activate` to navigate to the
 project you want to set compat for.
 
 ```julia
-using CompatUI
+using PackageCompatUI
 compat_ui()
 ```
 

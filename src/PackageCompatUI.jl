@@ -1,11 +1,11 @@
 """
-    using CompatUI
+    using PackageCompatUI
     compat_ui()
 
 Interactive terminal interface to the `[compat]` section of
-`Project.toml` for the currently active project.
+`Project.toml` for the *currently active project*.
 """
-module CompatUI
+module PackageCompatUI
 
 export compat_ui
 
@@ -47,8 +47,8 @@ compatible versions are also set or unset.
 * Gray: Package is not registered.
 """
 function compat_ui(;pagesize = 20, dates = true)
-    if VERSION < v"1.6.0-DEV.1496"
-        println("Julia version must be at least 1.6.0-DEV.1496.")
+    if VERSION < v"1.6.0-DEV.1554"
+        println("Julia version must be at least 1.6.0-DEV.1554.")
         return
     end
     project = Pkg.Types.read_project(Base.active_project())
