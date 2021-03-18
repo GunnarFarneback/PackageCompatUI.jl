@@ -115,7 +115,7 @@ function find_version_dates!(dates, registry, package_dir)
         println()
     else
         if registry_name ∉ fetched_this_session
-            git("fetch", "-q")
+            git("fetch", "-q", "origin", "master:master")
             push!(fetched_this_session, registry_name)
         end
     end
