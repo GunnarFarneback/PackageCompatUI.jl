@@ -15,8 +15,7 @@ project you want to set compat for.
 
 ## Compatibility
 
-PackageCompatUI requires a Julia master version of 2020-11-23 or later
-(after the merge of https://github.com/JuliaLang/julia/pull/38489).
+PackageCompatUI requires a Julia 1.6 or later.
 
 ## Usage
 
