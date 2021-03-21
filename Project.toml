@@ -1,7 +1,7 @@
 name = "PackageCompatUI"
 uuid = "65465c31-362d-417a-a2f0-7fa38ae507b9"
 authors = ["Gunnar Farnebäck <gunnar.farneback@contextvision.se>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
@@ -15,6 +15,6 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 julia = "1.6"
-GitCommand = "1.1"
+GitCommand = "2.1"
 JSON3 = "1"
 Scratch = "1"
