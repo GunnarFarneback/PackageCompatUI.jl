@@ -75,8 +75,10 @@ function compat_ui(;pagesize = 20, dates = true)
 end
 
 function gitcmd(repo)
-    (x...) -> GitCommand.git() do git
-        readlines(Cmd([git, "-C", repo, x...]))
+    function (x...)
+        cmd = `$(GitCommand.git()) -C $(repo)`
+        append!(cmd.exec, x...)
+        readlines(cmd)
     end
 end
 
