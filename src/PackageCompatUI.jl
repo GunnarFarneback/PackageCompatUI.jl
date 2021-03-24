@@ -13,7 +13,7 @@ using Pkg
 using Downloads: download
 using JSON3
 using Scratch
-using GitCommand
+using Git
 using Dates
 
 include("menu.jl")
@@ -75,8 +75,10 @@ function compat_ui(;pagesize = 20, dates = true)
 end
 
 function gitcmd(repo)
-    (x...) -> GitCommand.git() do git
-        readlines(Cmd([git, "-C", repo, x...]))
+    function (x...)
+        cmd = Git.git()
+        push!(cmd.exec, "-C", repo, x...)
+        readlines(cmd)
     end
 end
 
