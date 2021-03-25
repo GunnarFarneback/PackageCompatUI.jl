@@ -75,11 +75,8 @@ function compat_ui(;pagesize = 20, dates = true)
 end
 
 function gitcmd(repo)
-    function (x...)
-        cmd = Git.git()
-        push!(cmd.exec, "-C", repo, x...)
-        readlines(cmd)
-    end
+    git = Git.git(["-C", repo])
+    return (x...) -> readlines(`$git $x`)
 end
 
 # Find registry version information for the package with the given
