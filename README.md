@@ -7,7 +7,7 @@ of a Julia `Project.toml` file.
 
 ```julia
 using Pkg
-pkg"add https://github.com/GunnarFarneback/PackageCompatUI.jl.git"
+pkg"add PackageCompatUI"
 ```
 
 *Note*: add PackageCompatUI to your default environment, not to the
@@ -15,7 +15,7 @@ project you want to set compat for.
 
 ## Compatibility
 
-PackageCompatUI requires a Julia 1.6 or later.
+PackageCompatUI requires Julia 1.6 or later.
 
 ## Usage
 
