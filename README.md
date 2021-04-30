@@ -50,3 +50,7 @@ compat_ui()
 * Yellow: Compat declared for some versions of the package, but not the latest.
 * Green: Compatible with the latest version of the package.
 * Gray: Package is not registered.
+
+## Tutorial
+
+[Example 1](docs/example1.md) and [Example 2](docs/example2.md).
