@@ -85,16 +85,32 @@ end
 function find_versions(uuid, find_dates)
     versions = String[]
     dates = Dict{String, String}()
-    for registry in Pkg.Types.collect_registries()
-        reg_data = Pkg.Types.read_registry(joinpath(registry.path,
-                                                    "Registry.toml"))
-        if haskey(reg_data["packages"], string(uuid))
-            package_dir = reg_data["packages"][string(uuid)]["path"]
-            versions_file = joinpath(registry.path, package_dir,
-                                     "Versions.toml")
-            append!(versions, keys(Pkg.TOML.parsefile(versions_file)))
-            if find_dates
-                find_version_dates!(dates, reg_data, package_dir)
+    if VERSION >= v"1.7-"
+        for registry in Pkg.Registry.reachable_registries()
+            if haskey(registry.pkgs, uuid)
+                package_dir = registry.pkgs[uuid].path
+                versions_file = joinpath(registry.path, package_dir,
+                                         "Versions.toml")
+                append!(versions, keys(Pkg.TOML.parsefile(versions_file)))
+                if find_dates
+                    find_version_dates!(dates, registry.name,
+                                        registry.repo, package_dir)
+                end
+            end
+        end
+    else
+        for registry in Pkg.Types.collect_registries()
+            reg_data = Pkg.Types.read_registry(joinpath(registry.path,
+                                                        "Registry.toml"))
+            if haskey(reg_data["packages"], string(uuid))
+                package_dir = reg_data["packages"][string(uuid)]["path"]
+                versions_file = joinpath(registry.path, package_dir,
+                                         "Versions.toml")
+                append!(versions, keys(Pkg.TOML.parsefile(versions_file)))
+                if find_dates
+                    find_version_dates!(dates, reg_data["name"],
+                                        reg_data["repo"], package_dir)
+                end
             end
         end
     end
@@ -104,13 +120,12 @@ end
 
 fetched_this_session = Set{String}()
 
-function find_version_dates!(dates, registry, package_dir)
-    registry_name = registry["name"]
+function find_version_dates!(dates, registry_name, registry_repo, package_dir)
     repo = @get_scratch!(registry_name)
     git = gitcmd(repo)
     if !isdir(joinpath(repo, "refs"))
         println("\nCloning the $(registry_name) Registry. This might take some time.")
-        git("clone", "--bare", registry["repo"], ".")
+        git("clone", "--bare", registry_repo, ".")
         println()
     else
         if registry_name ∉ fetched_this_session
