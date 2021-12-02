@@ -65,13 +65,32 @@ function compat_ui(;pagesize = 20, dates = true)
     versions["julia"] = get_julia_versions()
     version_dates["julia"] = Dict{String, String}()
     packages = vcat("julia", sort(collect(keys(needs_compat))))
-    data = MenuData(packages, project.compat, versions, version_dates)
+    data = MenuData(packages, extract_compat_string(project.compat),
+                    versions, version_dates)
     menu = Menu(data, pagesize)
     menu.cursor[] = selected
     request(menu, cursor = menu.cursor)
-    project.compat = data.compat
+    set_project_compat!(project, data.compat)
     Pkg.Types.write_project(project, Base.active_project())
     return
+end
+
+# Compatibility layer to handle Pkg internals changes between Julia 1.6
+# and Julia 1.7.
+extract_compat_string(compat::Dict) = Dict(k => extract_compat_string(v)
+                                           for (k, v) in compat)
+extract_compat_string(compat::String) = compat
+extract_compat_string(compat) = compat.str
+set_project_compat!(project_compat::Dict{String, String}, new_compat) =
+    merge!(empty!(project_compat), new_compat)
+function set_project_compat!(project, compat)
+    if project.compat isa Dict{String, String}
+        project.compat = compat
+    else
+        for (package, compat_string) in compat
+            Pkg.Operations.set_compat(project, package, compat_string)
+        end
+    end
 end
 
 function gitcmd(repo)
