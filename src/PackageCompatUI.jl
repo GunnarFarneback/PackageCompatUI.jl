@@ -7,7 +7,7 @@ Interactive terminal interface to the `[compat]` section of
 """
 module PackageCompatUI
 
-export compat_ui
+export compat_ui, indirect_compat_ui
 
 using Pkg
 using Downloads: download
@@ -17,6 +17,9 @@ using Git
 using Dates
 
 include("menu.jl")
+if VERSION >= v"1.7"
+    include("indirect.jl")
+end
 
 """
     compat_ui()
