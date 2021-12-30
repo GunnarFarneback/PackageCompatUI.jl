@@ -102,15 +102,17 @@ end
 # `uuid`. This may pick up information from multiple registries.
 # Look up registration date of versions if `find_dates` is true.
 function find_versions(uuid, find_dates)
+    # TODO: Change this to be a vector of `VersionNumber` unless that
+    # causes problems later.
     versions = String[]
     dates = Dict{String, String}()
     if VERSION >= v"1.7-"
         for registry in Pkg.Registry.reachable_registries()
             if haskey(registry.pkgs, uuid)
-                package_dir = registry.pkgs[uuid].path
-                versions_file = joinpath(registry.path, package_dir,
-                                         "Versions.toml")
-                append!(versions, keys(Pkg.TOML.parsefile(versions_file)))
+                package = registry.pkgs[uuid]
+                package_dir = package.path
+                info = Pkg.Registry.registry_info(package)
+                append!(versions, string.(keys(info.version_info)))
                 if find_dates
                     find_version_dates!(dates, registry.name,
                                         registry.repo, package_dir)
