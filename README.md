@@ -13,7 +13,9 @@ pkg"add PackageCompatUI"
 *Note*: add PackageCompatUI to your default environment, not to the
 project you want to set compat for.
 
-*Note*: As of Julia v1.8, the `pkg>`-REPL-mode [natively supports editing of the compat section]((https://pkgdocs.julialang.org/dev/repl/#repl-compat).
+*Note*: As of Julia v1.8, the `pkg>`-REPL-mode
+[natively supports editing of the compat section](https://pkgdocs.julialang.org/dev/repl/#repl-compat).
+This is very rudimentary compared to PackageCompatUI but starts faster.
 
 ## Compatibility
 
