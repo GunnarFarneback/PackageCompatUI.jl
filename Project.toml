@@ -1,7 +1,7 @@
 name = "PackageCompatUI"
 uuid = "65465c31-362d-417a-a2f0-7fa38ae507b9"
 authors = ["Gunnar Farnebäck <gunnar.farneback@contextvision.se>"]
-version = "1.0.2"
+version = "1.0.3"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
