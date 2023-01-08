@@ -165,6 +165,20 @@ function load_state!(menu::Menu, mode::Symbol)
 end
 
 function writeline(buf::IOBuffer, menu::Menu, idx::Int, iscursor::Bool)
+    # This is a workaround for
+    # https://github.com/JuliaLang/julia/pull/48173.
+    #
+    # It can be removed when no Julia versions before 1.9 (probably)
+    # are supported.
+    #
+    # Note that while this workaround avoids indexing out of bounds
+    # and makes the menu work correctly, the result is still less than
+    # ideal with the options needlessly jumping around.
+    if idx <= 0
+        print(buf, "")
+        return
+    end
+
     if menu.mode == :-
         print(buf, menu.options[idx])
     else
