@@ -150,7 +150,10 @@ function find_version_dates!(dates, registry_name, registry_repo, package_dir)
         println()
     else
         if registry_name ∉ fetched_this_session
-            git("fetch", "-q", "origin", "master:master")
+            # Find the name of the branch which HEAD points to,
+            # usually `master` or `main`.
+            branch = only(git("symbolic-ref", "--short", "HEAD"))
+            git("fetch", "-q", "origin", "$(branch):$(branch)")
             push!(fetched_this_session, registry_name)
         end
     end
