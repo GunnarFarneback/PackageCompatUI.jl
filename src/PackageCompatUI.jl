@@ -52,8 +52,9 @@ function compat_ui(;pagesize = 20, dates = true)
         return
     end
     project = Pkg.Types.read_project(Base.active_project())
-    needs_compat = filter(p -> !Pkg.Types.is_stdlib(last(p)),
-                          merge(project.deps, project.extras))
+    needs_compat = merge(project.deps, project.extras)
+    hasproperty(project, :weakdeps) && merge!(needs_compat, project.weakdeps)
+    filter!(p -> !Pkg.Types.is_stdlib(last(p)), needs_compat)
     selected = 1
     versions = Dict{String, Vector{String}}()
     version_dates = Dict{String, Dict{String, String}}()
