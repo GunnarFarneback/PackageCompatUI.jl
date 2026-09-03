@@ -47,10 +47,6 @@ compatible versions are also set or unset.
 * Gray: Package is not registered.
 """
 function compat_ui(;pagesize = 20, dates = true)
-    if VERSION < v"1.6.0-DEV.1554"
-        println("Julia version must be at least 1.6.0-DEV.1554.")
-        return
-    end
     project = Pkg.Types.read_project(Base.active_project())
     needs_compat = merge(project.deps, project.extras)
     hasproperty(project, :weakdeps) && merge!(needs_compat, project.weakdeps)
@@ -107,7 +103,7 @@ function find_versions(uuid, find_dates)
     # causes problems later.
     versions = String[]
     dates = Dict{String, String}()
-    if VERSION >= v"1.7-"
+    if VERSION >= v"1.7"
         for registry in Pkg.Registry.reachable_registries()
             if haskey(registry.pkgs, uuid)
                 package = registry.pkgs[uuid]
