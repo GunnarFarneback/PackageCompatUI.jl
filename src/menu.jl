@@ -142,7 +142,7 @@ function toggle_selected!(menu::Menu)
         operation = push!
     end
     versions = menu.data.versions[String(menu.mode)]
-    spec = Pkg.Types.semver_spec(base_version(versions[menu.cursor[]]))
+    spec = pkg_semver_spec(base_version(versions[menu.cursor[]]))
     for (i, version) in enumerate(versions)
         if VersionNumber(version) in spec
             operation(menu.selected, i)

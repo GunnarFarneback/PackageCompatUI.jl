@@ -9,12 +9,20 @@ module PackageCompatUI
 
 export compat_ui
 
-import Pkg
 using Downloads: download
 import JSON3
 using Scratch: @get_scratch!
 import Git
 import Dates
+
+import Pkg
+@static if VERSION >= v"1.7"
+    using Pkg.Versions: semver_spec as pkg_semver_spec
+    using Pkg.Versions: VersionSpec
+else
+    using Pkg.Types: semver_spec as pkg_semver_spec
+    using Pkg.Types: VersionSpec
+end
 
 include("menu.jl")
 
@@ -184,7 +192,7 @@ function find_compatible_versions(versions, compat)
     if isempty(compat)
         return String[]
     end
-    semver = Pkg.Types.semver_spec(compat)
+    semver = pkg_semver_spec(compat)
     return filter(v -> VersionNumber(v) in semver, versions)
 end
 
@@ -243,12 +251,12 @@ function base_version(version::String)
     return string(VersionNumber(v.major, v.minor, v.patch, (), ()))
 end
 
-# Extension of `Pkg.Types.semver_spec` for vector of strings.
+# Extension of `Pkg.Versions.semver_spec` for vector of strings.
 function semver_spec(s::Vector{String})
     if isempty(s)
-        return Pkg.Types.VersionSpec([])
+        return VersionSpec([])
     end
-    return Pkg.Types.semver_spec(join(s, ", "))
+    return pkg_semver_spec(join(s, ", "))
 end
 
 is00x(v::VersionNumber) = v.major == v.minor == 0
