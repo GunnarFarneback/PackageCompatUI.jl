@@ -30,7 +30,8 @@ end
 include("menu.jl")
 
 @static if VERSION >= v"1.12"
-include("app.jl")
+    include("app.jl")
+    include("precompile.jl")
 end
 
 """
