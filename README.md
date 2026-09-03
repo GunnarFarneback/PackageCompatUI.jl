@@ -3,7 +3,21 @@
 PackageCompatUI is a terminal text interface to the `[compat]` section
 of a Julia `Project.toml` file.
 
-## Installation
+## Installation as an App (recommended)
+
+This installation method requires Julia 1.12 or later.
+
+```julia
+using Pkg
+pkg"app add PackageCompatUI"
+```
+
+As is common for Julia Apps, you also need to have `~/.julia/bin` in
+your `PATH`.
+
+## Installation as a Package
+
+This installation method requires Julia 1.6 or later.
 
 ```julia
 using Pkg
@@ -17,13 +31,18 @@ project you want to set compat for.
 [natively supports editing of the compat section](https://pkgdocs.julialang.org/dev/repl/#repl-compat).
 This is very rudimentary compared to PackageCompatUI but starts faster.
 
-## Compatibility
+## App Usage
 
-PackageCompatUI requires Julia 1.6 or later.
+Change directory to the project you want to set compat for. Then run
+```
+compat_ui
+```
 
-## Usage
+(For now arguments are ignored.)
 
-Start Julia with `--project` or use `Pkg.activate` to navigate to the
+## Package Usage
+
+Start Julia with `--project` or use `Pkg.activate` to activate the
 project you want to set compat for.
 
 ```julia
