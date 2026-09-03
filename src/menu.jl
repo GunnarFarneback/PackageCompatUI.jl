@@ -1,5 +1,4 @@
-using REPL.TerminalMenus
-using REPL.TerminalMenus: _ConfiguredMenu, Config, ARROW_LEFT, ARROW_RIGHT
+using REPL.TerminalMenus: _ConfiguredMenu, Config, ARROW_LEFT, ARROW_RIGHT, request
 import REPL.TerminalMenus: options, writeline, writeLine, keypress, cancel,
                            pick, selected, header
 

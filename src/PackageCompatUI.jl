@@ -9,12 +9,12 @@ module PackageCompatUI
 
 export compat_ui
 
-using Pkg
+import Pkg
 using Downloads: download
-using JSON3
-using Scratch
-using Git
-using Dates
+import JSON3
+using Scratch: @get_scratch!
+import Git
+import Dates
 
 include("menu.jl")
 
@@ -163,7 +163,7 @@ function find_version_dates!(dates, registry_name, registry_repo, package_dir)
             m = match(r"\[\"(.*)\"\]", blame)
             if !isnothing(m)
                 version = only(m.captures)
-                dates[version] = Dates.format(unix2datetime(time), "yyyy-mm-dd")
+                dates[version] = Dates.format(Dates.unix2datetime(time), "yyyy-mm-dd")
             end
         end
     end
