@@ -14,6 +14,7 @@ import JSON3
 using Scratch: @get_scratch!
 import Git
 import Dates
+import RegistryInstances
 
 import Pkg
 @static if VERSION >= v"1.7"
@@ -111,32 +112,15 @@ function find_versions(uuid, find_dates)
     # causes problems later.
     versions = String[]
     dates = Dict{String, String}()
-    if VERSION >= v"1.7"
-        for registry in Pkg.Registry.reachable_registries()
-            if haskey(registry.pkgs, uuid)
-                package = registry.pkgs[uuid]
-                package_dir = package.path
-                info = Pkg.Registry.registry_info(package)
-                append!(versions, string.(keys(info.version_info)))
-                if find_dates
-                    find_version_dates!(dates, registry.name,
-                                        registry.repo, package_dir)
-                end
-            end
-        end
-    else
-        for registry in Pkg.Types.collect_registries()
-            reg_data = Pkg.Types.read_registry(joinpath(registry.path,
-                                                        "Registry.toml"))
-            if haskey(reg_data["packages"], string(uuid))
-                package_dir = reg_data["packages"][string(uuid)]["path"]
-                versions_file = joinpath(registry.path, package_dir,
-                                         "Versions.toml")
-                append!(versions, keys(Pkg.TOML.parsefile(versions_file)))
-                if find_dates
-                    find_version_dates!(dates, reg_data["name"],
-                                        reg_data["repo"], package_dir)
-                end
+    for registry in RegistryInstances.reachable_registries()
+        if haskey(registry.pkgs, uuid)
+            package = registry.pkgs[uuid]
+            package_dir = package.path
+            info = RegistryInstances.registry_info(package)
+            append!(versions, string.(keys(info.version_info)))
+            if find_dates
+                find_version_dates!(dates, registry.name,
+                                    registry.repo, package_dir)
             end
         end
     end
