@@ -29,6 +29,10 @@ end
 
 include("menu.jl")
 
+@static if VERSION >= v"1.12"
+include("app.jl")
+end
+
 """
     compat_ui()
 
