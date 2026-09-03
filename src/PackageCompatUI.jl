@@ -10,6 +10,8 @@ module PackageCompatUI
 export compat_ui
 
 using Downloads: download
+# TODO: When Julia versions before 1.9 are no longer supported, switch
+# over to the JSON package.
 import JSON3
 using Scratch: @get_scratch!
 import Git
@@ -87,13 +89,17 @@ extract_compat_string(compat::Dict) = Dict(k => extract_compat_string(v)
                                            for (k, v) in compat)
 extract_compat_string(compat::String) = compat
 extract_compat_string(compat) = compat.str
-set_project_compat!(project_compat::Dict{String, String}, new_compat) =
-    merge!(empty!(project_compat), new_compat)
 function set_project_compat!(project, compat)
     if project.compat isa Dict{String, String}
+        # Julia 1.6.
         project.compat = compat
     else
+        # Julia 1.7 and later.
         for (package, compat_string) in compat
+            # Note: Pkg.Operations.set_compat is not public. It could
+            # easily be vendored but would then instead reach into
+            # some struct internals, which are not very likely to be
+            # more reliable.
             Pkg.Operations.set_compat(project, package, compat_string)
         end
     end
